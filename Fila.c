@@ -1,40 +1,85 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define NULL 0
+
+//#define NULL ((void *) 0)
 
 typedef struct{
-    int valor;
-} info;
+    int id;
+} data;
 
 typedef struct{
-    info data;
-    struct tipoFila *pnext;
+    data info;
+    struct tipoFila *next;
 } tipoFila;
 
 typedef struct{
-    tipoFila pfirst;
-    tipoFila pLast;
-} SFila;
+    tipoFila *pFirst;
+    tipoFila *pLast;
+} indexFila;
 
 
 int main(){
 
-    return 0;
+
 }
 
+void PUSH(indexFila *index, data *dat){
+    tipoFila *new;
 
-SFila *Reset(SFila *old){
+    new = (new *) malloc(sizeof(tipoFila));
+    new->info = dat;
+    new->next = NULL;
 
-    if(old){
-       //CLEAR 
+    if(index->pLast != NULL)
+        index->pLast->next = new;
+    else{
+        index->pFirst = new;
+        index->pLast = new;
+    }
+    
+    index->pLast = new;
+
+}
+
+int POP(indexFila *index){
+
+    if(index->pFirst == NULL)
+        return 0;
+
+    tipoFila *new = index->pFirst;
+    index->pFirst = index->pFirst->next;
+
+    if(index->pFirst == NULL)
+        index->pLast = NULL;
+
+    free(new);
+    return 1;
+}
+
+void 
+
+indexFila *RESET(indexFila *pOldFila){
+
+    if(pOldFila){
+       // Clear(pOldFila->pFirst);
     }
 
-    SFila *fila;
+    indexFila *pFila;
 
-    fila = (SFila*) malloc(sizeof(SFila));
-   // fila->pfirst = NULL;
-   // fila->pLast = NULL;
+    pFila = (indexFila *) malloc(sizeof(indexFila));
+    pFila->pFirst = NULL;
+    pFila->pLast = NULL;
 
-   return fila;
-
+    return pFila;
 }
+/*
+void Clear(struct tipoFila *pointer){
+    if(pointer->next != NULL)
+        Clear(pointer->next);
+
+    free(pointer);
+}
+*/
+
+
+
